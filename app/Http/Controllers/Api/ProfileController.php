@@ -14,7 +14,6 @@ use Validator;
  */
 class ProfileController extends Controller
 {
-
     /**
      * Create a new profile
      * @param Request $request
@@ -27,7 +26,7 @@ class ProfileController extends Controller
             'email' => 'required|unique:profiles'
         ]);
 
-        if ( !$validation->passes() ) {
+        if (!$validation->passes()) {
             return response()->json([
                 'message' => $validation->errors()->all()
             ]);
@@ -55,7 +54,7 @@ class ProfileController extends Controller
 
         $profile = Profile::find($profileId);
 
-        if( empty($profile) ) {
+        if (empty($profile)) {
             return response()->json([
                 'message' => "The profile doesn't exist"
             ]);
@@ -74,7 +73,7 @@ class ProfileController extends Controller
     {
         $profile = Profile::find($profileId);
 
-        if ( empty($profile) ) {
+        if (empty($profile)) {
             return response()->json([
                 'message' => "The profile doesn't exist"
             ]);
@@ -82,13 +81,13 @@ class ProfileController extends Controller
 
         $rules = ['name' => 'required'];
 
-        if( $profile->email !== $request->email ) {
+        if ($profile->email !== $request->email) {
             $rules['email'] = 'required|unique:profiles';
         }
 
         $validation = Validator::make($request->all(), $rules);
 
-        if ( !$validation->passes() ) {
+        if (!$validation->passes()) {
             return response()->json([
                 'message' => $validation->errors()->all()
             ]);
@@ -112,7 +111,7 @@ class ProfileController extends Controller
     {
         $profile = Profile::find($profileId);
 
-        if ( empty($profile) ) {
+        if (empty($profile)) {
             return response()->json([
                 'message' => "The profile doesn't exist"
             ]);
@@ -137,7 +136,7 @@ class ProfileController extends Controller
             'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        if ( !$validation->passes() ) {
+        if (!$validation->passes()) {
             return response()->json([
                 'message' => $validation->errors()->all()
             ]);
@@ -145,7 +144,7 @@ class ProfileController extends Controller
 
         $profile = Profile::find($profileId);
 
-        if ( empty($profile) ) {
+        if (empty($profile)) {
             return response()->json([
                 'message' => "The profile doesn't exist"
             ]);
