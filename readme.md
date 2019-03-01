@@ -1,71 +1,172 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# API Profile Manager
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Introducción
 
-## About Laravel
+La api permite gestionar un perfil de usuario básico.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Quienes la consuman deberán poder:
+1. Traer su información
+2. Borrar su información
+3. Modificar su información
+4. Subir una imagen.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requerimientos de instalación
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+La API fue desarrollada mediante el framework Laravel (versión 5.7) 
+por tanto, tiene los siguientes requisitos para poder ser montada en 
+nuestro localhost.
 
-## Learning Laravel
+- PHP >= 7.1.3 (requerido por Laravel 5.7)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Composer
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost you and your team's skills by digging into our comprehensive video library.
+- OpenSSL PHP Extension (requerido por Laravel 5.7)
 
-## Laravel Sponsors
+- PDO PHP Extension (requerido por Laravel 5.7)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- Mbstring PHP Extension (requerido por Laravel 5.7)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
+- Tokenizer PHP Extension (requerido por Laravel 5.7)
 
-## Contributing
+- XML PHP Extension (requerido por Laravel 5.7)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Ctype PHP Extension (requerido por Laravel 5.7)
 
-## Security Vulnerabilities
+- JSON PHP Extension (requerido por Laravel 5.7)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- BCMath PHP Extension (requerido por Laravel 5.7)
 
-## License
+- MySql (alguna versión compatible con la del framework, 
+para su desarrollo se utilizó la 5.7)
 
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Postman (Como sugerencia para poder probar las llamadas a la Api)
+
+#### Primeros pasos
+1. Crear una bd en nuestro servidor MySql.
+
+2. Crear y configurar el archivo .env de Laravel con las 
+credenciales necesarias para conectar a la bd, para esto
+ tomar como modelo el archivo .env.example que 
+ proporcionado por el framework.
+ 
+3. Correr la migration para crear la tabla profiles en donde se alojarán
+ los perfiles. Para poder hacer esto, nos paramos en el root del proyecto
+  y corremos php artisan migrate.
+  
+## Endpoints de la API
+
+### get-profile
+Endpoint que nos devuelve un perfil de usuario en formato json.
+
+Url: **http://localhost/profile/{profileId}/get-profile**
+
+Method: **GET**
+
+Parámetros: **id de perfil (mandatorio)**
+
+Validaciones: **ninguna**
+
+Respuesta esperada: 
+
+    {
+        "id": 1,
+        "name": "daniel",
+        "email": "emanuel@gmail.com",
+        "image": "http://localhost/images/834256792.jpg",
+        "created_at": "2019-03-01 01:03:02",
+        "updated_at": "2019-03-01 01:43:54"
+    }
+    
+### upload-image
+Endpoint que nos permite cargar una imagen de perfil a través de la api.
+
+A modo de sugerencia, revisar este link para ver como enviar un fichero 
+usando postman.
+
+https://stackoverflow.com/questions/16015548/tool-for-sending-multipart-form-data-request
+
+Url: **http://localhost/profile/{profileId}/upload-image**
+
+Method: **POST**
+
+Parámetros: 
+- **id de perfil (mandatorio)**
+- **archivo de imagen (mandatorio)**
+
+Validaciones: 
+- **El tamaño máximo del archivo es de 2048 bytes.**
+- **El archivo debe ser una imagen.**
+- **El formato debe ser jpeg, png, jpg o gif.**
+
+Respuesta esperada:
+
+    {
+        "message": "Image upload successfully"
+    }
+    
+### create-profile
+Endpoint que nos permite crear un nuevo perfil.
+
+Url: **http://localhost/profile/create-profile**
+
+Method: **POST**
+
+Parámetros:
+- **name (mandatorio)**
+- **email (mandatorio)**
+
+Validaciones:
+- **El email no debe estar previamente cargado ya que es único.**
+
+Respuesta esperada:
+
+    {
+        "message": "Profile created successfully",
+        "profileId": 30
+    }
+    
+### update-profile
+Endpoint que permite modificar la información de perfil.
+
+Url: **http://localhost/profile/{profileId}/update-profile**
+
+Method: **PUT**
+
+Parámetros:
+- **id del perfil**
+- **name (mandatorio)**
+- **email (mandatorio)**
+
+Validaciones:
+- **Si se cambia el email este nuevo valor no debe estar previamente 
+cargado ya que es único.**
+
+Respuesta esperada:
+
+    {
+        "message": "Profile updated successfully",
+        "profileId": 1
+    }
+    
+### delete-profile
+Endpoint que nos permite borrar un perfil
+
+Url: **http://localhost/profile/{profileId}/delete-profile**
+
+Method: **DELETE**
+
+Parámetros:
+- **id del perfil**
+
+Validaciones: **ninguna**
+
+Respuesta esperada:
+
+    {
+        "message": "Profile deleted successfully"
+    }
+
+## Test Unitarios
+Los test unitarios corren con phpunit, cada uno de los test se 
+encuentran en la clase exam/test/Feature/ProfileTest.php y para ejecutarlos podemos correr
+ desde el root del proyecto el comando vendor/bin/phpunit.
